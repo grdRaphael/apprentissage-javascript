@@ -25,3 +25,12 @@ let totalMorceaux = 'Morceaux disponibles dans la playlist : ' + playlist.length
 console.log(playlist)
 console.log(totalMorceaux)
 
+/* déclarer un objet */
+
+let objet = {
+    nom:'grd',
+    prenom: 'raph',
+    age: '32'
+}
+
+console.log(objet.nom)
