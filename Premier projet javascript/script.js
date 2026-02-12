@@ -1,59 +1,123 @@
-console.log("Hello World");
 
-/* 
-Étape 1 : Testez le premier mot
-Déclarez une variable listeMots qui est un tableau. 
-Ce tableau contient trois mots que l’utilisateur devra taper au clavier : “Cachalot”, “Pétunia” et “Serviette”. */
+function exercice1() {
+    /* =================================================================================
+    Étape 1 : Testez le premier mot
+    Déclarez une variable listeMots qui est un tableau. 
+    Ce tableau contient trois mots que l’utilisateur devra taper au clavier : “Cachalot”, “Pétunia” et “Serviette”. 
+    =================================================================================*/
 
-let listeMots = ['a', 'b', 'c']
+    let listeMots = ['a', 'b', 'c']
 
-/* Déclarez une deuxième variable score, initialisée à 0, qui contiendra le nombre de mots correctement tapés par l’utilisateur.*/
+    /* Déclarez une deuxième variable score, initialisée à 0, qui contiendra le nombre de mots correctement tapés par l’utilisateur.*/
 
-let score = 0
+    let score = 0
 
-/* À l’aide de l’instruction prompt, demandez à l’utilisateur de rentrer le mot contenu dans la première case du tableau. 
-N’oubliez pas, la première case d’un tableau est la case numéro zéro !*/
+    /* À l’aide de l’instruction prompt, demandez à l’utilisateur de rentrer le mot contenu dans la première case du tableau. 
+    N’oubliez pas, la première case d’un tableau est la case numéro zéro !*/
 
-let wordUser = prompt('Entrez le premier mot : ' + listeMots[0])
+    let wordUser = prompt('Entrez le mot : ' + listeMots[0])
 
-/* Écrivez une première structure conditionnelle pour savoir si le mot tapé par l’utilisateur est bien celui demandé par l’application.*/
-/*Si c’est le cas, on augmente la valeur de score de 1.
-Vérifiez avec des console.log si le score final est correct. */
+    /* Écrivez une première structure conditionnelle pour savoir si le mot tapé par l’utilisateur est bien celui demandé par l’application.*/
+    /*Si c’est le cas, on augmente la valeur de score de 1.
+    Vérifiez avec des console.log si le score final est correct. */
 
-if (wordUser === listeMots[0]) {
-    console.log('Bravo !');
-    score += 1
-} else {
-    console.log('Vous avez fait une erreur de frappe');
+    if (wordUser === listeMots[0]) {
+        console.log('Bravo !');
+        score += 1
+    } else {
+        console.log('Vous avez fait une erreur de frappe');
+    }
+
+    /* =================================================
+    Étape 2 : Testez le second mot
+    Demandez à l’utilisateur de rentrer le second mot. 
+    Faites une seconde structure conditionnelle pour vérifier si le second mot tapé par l’utilisateur correspond 
+    bien au second mot du tableau.
+    ==================================================== */
+
+    wordUser = prompt('Entrez le mot : ' + listeMots[1])
+    if (wordUser === listeMots[1]) {
+        console.log('Bravo !');
+        score += 1
+    } else {
+        console.log('Vous avez fait une erreur de frappe');
+    }
+
+    /* ==========================================================
+    Étape 3 : Testez le troisième mot
+    Recommencez une troisième fois pour la dernière case du tableau !
+    ===========================================================*/
+
+    wordUser = prompt('Entrez le  mot : ' + listeMots[2])
+    if (wordUser === listeMots[2]) {
+        console.log('Bravo !');
+        score += 1
+    } else {
+        console.log('Vous avez fait une erreur de frappe');
+    }
+
+    console.log("Votre score total est : " + score)
+
 }
 
-/* Étape 2 : Testez le second mot
-Demandez à l’utilisateur de rentrer le second mot. 
-Faites une seconde structure conditionnelle pour vérifier si le second mot tapé par l’utilisateur correspond 
-bien au second mot du tableau. */
 
-wordUser = prompt('Entrez le mot : ' + listeMots[1])
-if (wordUser === listeMots[1]) {
-    console.log('Bravo !');
-    score += 1
-}else {
-    console.log('Vous avez fait une erreur de frappe');
+
+function exercice2() {
+
+    /* Étape 1 : répétez votre code avec une boucle
+    Demandez à l’utilisateur de le retaper avec prompt ;
+    Comptez un point par mot correctement tapé ;
+    Affichez le score à la fin avec un console.log. */
+
+    /* Étape 2 : proposez deux types de listes de mots
+    => Pour rendre le jeu plus engageant, nous voulons que l’utilisateur puisse avoir le choix entre 
+    deux listes de mots différentes : une liste avec des mots et une liste avec des phrases.
+    => Déclarez un tableau listePhrases qui contient 3 courtes phrases : 
+    “Pas de panique !”, “La vie, l’univers et le reste”, “Merci pour le poisson”.
+    => Demandez à l’utilisateur s’il veut la liste de mots ou la liste de phrases. 
+    => Répétez la question tant que l’utilisateur n’a pas écrit “mots” ou “phrases”.
+    => Lancez votre boucle for, avec la liste que l’utilisateur a choisie. */
+
+    let listeMots = ['a', 'b', 'c']
+    let listePhrases = ['La vie', "Un univers", 'Le monde']
+
+
+    let score = 0
+
+
+    let choixExercices = prompt("Choisissez votre exercice Tapez : phrases ou mots")
+
+    while (choixExercices !== 'phrases' && choixExercices !== 'mots') {
+    choixExercices = prompt("Choisissez votre exercice Tapez : phrases ou mots")
+    }
+
+    if (choixExercices === "phrases") {
+        exercicePhrases()
+    } else{
+        exerciceMots()
+    } 
+
+    function exercicePhrases() {
+        for (i = 0; i < listePhrases.length; i++) {
+            let sentenceUser = prompt('Entrez le mot : ' + listePhrases[i])
+            if (sentenceUser === listePhrases[i]) {
+                score++
+            }
+            
+        }
+        console.log("Bravo ! Votre score est de : " + score + " sur " + listePhrases.length)
+    }
+
+    function exerciceMots() {
+        for (i = 0; i < listeMots.length; i++) {
+            let wordUser = prompt('Entrez le mot : ' + listeMots[i])
+            if (wordUser === listeMots[i]) {
+                score++
+            }
+            
+        }
+        console.log("Bravo ! Votre score est de : " + score + ' sur ' + listeMots.length)
+    }
 }
 
-/* Étape 3 : Testez le troisième mot
-Recommencez une troisième fois pour la dernière case du tableau !*/
-
-wordUser = prompt('Entrez le  mot : ' + listeMots[2])
-if (wordUser === listeMots[2]) {
-    console.log('Bravo !');
-    score += 1
-} else {
-    console.log('Vous avez fait une erreur de frappe');
-}
-
-console.log("Votre score total est : " + score)
-
-
-
-
-
+exercice2()
