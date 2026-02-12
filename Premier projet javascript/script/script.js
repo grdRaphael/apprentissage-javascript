@@ -136,7 +136,7 @@ d’écrire.
 
 
 
-function executeExo3() {
+
 
     let score = 0
 
@@ -177,9 +177,5 @@ function executeExo3() {
         console.log("Bravo ! Votre score est de : " + score + " sur " + nbMotPropose)
     }
 
-    lancerJeu()
 
-}
-
-executeExo3()
 
