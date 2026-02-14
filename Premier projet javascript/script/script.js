@@ -137,45 +137,124 @@ d’écrire.
 
 
 
+let score = 0
 
-    let score = 0
+//function choisirPhrasesOuMots() {
+//let choixExercices = prompt("Choisissez votre exercice Tapez : phrases ou mots")
 
-    function choisirPhrasesOuMots() {
-        let choixExercices = prompt("Choisissez votre exercice Tapez : phrases ou mots")
+//while (choixExercices !== 'phrases' && choixExercices !== 'mots') {
+//choixExercices = prompt("Choisissez votre exercice Tapez : phrases ou mots")
+// }
+//return choixExercices
+//}
 
-        while (choixExercices !== 'phrases' && choixExercices !== 'mots') {
-            choixExercices = prompt("Choisissez votre exercice Tapez : phrases ou mots")
+function lancerBoucleDeJeu(liste) {
+
+    for (i = 0; i < liste.length; i++) {
+        let sentenceUser = /*prompt()*/'Entrez le mot : ' + liste[i]
+        console.log(i)
+        if (sentenceUser === liste[i]) {
+            score++
         }
-        return choixExercices
+    }
+    return score
+}
+
+/*function lancerJeu() {
+    let choix = choisirPhrasesOuMots();
+    let nbMotPropose = 0;
+    if (choix === "mots") {
+        lancerBoucleDeJeu(listeMots);
+        nbMotPropose = listeMots.length
+    } else {
+        lancerBoucleDeJeu(listePhrases);
+        nbMotPropose = listePhrases.length
+    }
+    afficherResultat(score, nbMotPropose);
+}*/
+
+/*=======================================================
+Exercice 3 : interagisser avec les éléments d'une page web
+=>> function lancerJeu() et tous les prompt desactiver pour réaliser 
+l'exercice
+=======================================================
+--------
+Etape 1
+--------
+Dans la fonction lancerJeu, récupérez le bouton de validation et écoutez
+l’événement click en utilisant la méthode addEventListener.
+Testez que cela fonctionne avec un console.log(“j’ai cliqué !”).
+
+Récupérez la balise inputEcriture et placez-la dans une variable. 
+
+Dans l’addEventListener, faites un console.log avec la valeur contenue dans 
+cette balise.
+
+Pour accéder à la valeur contenue dans la balise inputEcriture, utilisez la 
+propriété value. 
+
+Testez en écrivant quelque chose dans le champ, et en vérifiant que la valeur
+apparaît bien lorsque vous cliquez sur Envoyer. 
+
+------------------------------------------------------------
+Étape 3 : affichez les mots que l’utilisateur doit recopier
+------------------------------------------------------------
+À ce stade, vous savez comment récupérer le mot que l’utilisateur a écrit, mais 
+vous n’affichez pas encore le mot qu’il devra recopier. Pour réaliser cette mise 
+à jour du code HTML :
+
+à l’extérieur du addEventListener, créez une variable i qui servira de compteur. 
+Dans l’addEventListener, ajoutez 1 à i à chaque fois que l’utilisateur clique sur le
+ bouton Envoyer ; 
+
+ajoutez un console.log qui va afficher le mot numéro i du tableau listeMots ;
+
+créez une fonction afficherProposition, qui va prendre en paramètre le mot à afficher,
+ et afficher ce mot dans la div zoneProposition ;  
+
+utilisez cette fonction pour afficher les mots à proposer. */
+
+function lancerJeu() {
+    let i = 0
+    afficherProposition(listeMots[i])
+    bouttonValider = document.getElementById("btnValiderMot")
+    bouttonValider.addEventListener("click", function () {
+        console.log(inputEcriture.value)
+        i++
+        console.log(listeMots[i])
+        afficherProposition(listeMots[i])
+        let zoneProposition = document.querySelector('.zoneProposition')
+        if (i >= listeMots.length){
+            zoneProposition.textContent = "Le jeu est fini !"
+        }
+    })
+    inputEcriture = document.getElementById("inputEcriture")
+    inputEcriture.addEventListener("keydown", (Event) => {
+        if (Event.key === 'Enter') {
+            console.log(inputEcriture.value)
+            i++
+            console.log(liste[i])
+            afficherProposition(listeMots[i])
+        }
+    })
+    console.log(i)
+
+    lancerBoucleDeJeu(listeMots);
+    nbMotPropose = listeMots.length;
+    afficherResultat(score, nbMotPropose)
+}
+
+function afficherProposition(liste) {
+   
+        let zoneProposition = document.querySelector('.zoneProposition')
+        zoneProposition.textContent = liste
     }
 
-    function lancerBoucleDeJeu(liste) {
-
-        for (i = 0; i < liste.length; i++) {
-            let sentenceUser = prompt('Entrez le mot : ' + liste[i])
-            if (sentenceUser === liste[i]) {
-                score++
-            }
-        }
-        return score
-    }
-
-    function lancerJeu() {
-        let choix = choisirPhrasesOuMots();
-        let nbMotPropose = 0;
-        if (choix === "mots") {
-            lancerBoucleDeJeu(listeMots);
-            nbMotPropose = listeMots.length
-        } else {
-            lancerBoucleDeJeu(listePhrases);
-            nbMotPropose = listePhrases.length
-        }
-        afficherResultat(score, nbMotPropose);
-    }
 
     function afficherResultat(score, nbMotPropose) {
+        let spanScore = document.querySelector(".zoneScore span")
+        let affichageScore = `${score} / ${nbMotPropose}`
+        spanScore.innerText = affichageScore
         console.log("Bravo ! Votre score est de : " + score + " sur " + nbMotPropose)
     }
-
-
 
