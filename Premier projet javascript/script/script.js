@@ -148,10 +148,11 @@ let score = 0
 //return choixExercices
 //}
 
+/* 
 function lancerBoucleDeJeu(liste) {
 
     for (i = 0; i < liste.length; i++) {
-        let sentenceUser = /*prompt()*/'Entrez le mot : ' + liste[i]
+        let sentenceUser = prompt()'Entrez le mot : ' + liste[i]
         console.log(i)
         if (sentenceUser === liste[i]) {
             score++
@@ -159,6 +160,8 @@ function lancerBoucleDeJeu(liste) {
     }
     return score
 }
+*/
+
 
 /*function lancerJeu() {
     let choix = choisirPhrasesOuMots();
@@ -217,44 +220,66 @@ utilisez cette fonction pour afficher les mots à proposer. */
 function lancerJeu() {
     let i = 0
     afficherProposition(listeMots[i])
+    // Validation du mot avec le boutton valider
     bouttonValider = document.getElementById("btnValiderMot")
     bouttonValider.addEventListener("click", function () {
         console.log(inputEcriture.value)
+        lancerBoucleDeJeu(listeMots[i])
         i++
-        console.log(listeMots[i])
         afficherProposition(listeMots[i])
+        // Remmet le input a 0 apres chaque validation :
+        inputEcriture.value = ""
+        // le .focus() met automatiquement le curseur dans l'input :
+        inputEcriture.focus()
         let zoneProposition = document.querySelector('.zoneProposition')
-        if (i >= listeMots.length){
+        if (i >= listeMots.length) {
             zoneProposition.textContent = "Le jeu est fini !"
         }
+        afficherResultat()
     })
+
+    // Validation du mot avec la toucher Enter
     inputEcriture = document.getElementById("inputEcriture")
     inputEcriture.addEventListener("keydown", (Event) => {
         if (Event.key === 'Enter') {
             console.log(inputEcriture.value)
+            lancerBoucleDeJeu(listeMots[i])
             i++
-            console.log(liste[i])
             afficherProposition(listeMots[i])
+            inputEcriture.value = ""
+             let zoneProposition = document.querySelector('.zoneProposition')
+        if (i >= listeMots.length) {
+            zoneProposition.textContent = "Le jeu est fini !"
+        }
+        afficherResultat()
         }
     })
     console.log(i)
-
-    lancerBoucleDeJeu(listeMots);
-    nbMotPropose = listeMots.length;
-    afficherResultat(score, nbMotPropose)
 }
 
 function afficherProposition(liste) {
-   
-        let zoneProposition = document.querySelector('.zoneProposition')
-        zoneProposition.textContent = liste
+
+    let zoneProposition = document.querySelector('.zoneProposition')
+    zoneProposition.textContent = liste
+}
+
+function lancerBoucleDeJeu(liste) {
+    if (inputEcriture.value === liste) {
+        score++
+        console.log(score)
     }
 
+}
 
-    function afficherResultat(score, nbMotPropose) {
-        let spanScore = document.querySelector(".zoneScore span")
-        let affichageScore = `${score} / ${nbMotPropose}`
-        spanScore.innerText = affichageScore
-        console.log("Bravo ! Votre score est de : " + score + " sur " + nbMotPropose)
-    }
+function afficherResultat() {
+    let nbMotPropose = listeMots.length;
+    let spanScore = document.querySelector(".zoneScore span")
+    let affichageScore = `${score} / ${nbMotPropose}`
+    spanScore.innerText = affichageScore
+}
 
+let test = document.querySelector("footer span")
+let mot= 'bonjour'
+let autremot = ' tout le monde'
+let phrase = `${mot} ??? ${autremot}`
+test.innerHTML = phrase
