@@ -137,7 +137,7 @@ d’écrire.
 
 
 
-let score = 0
+
 
 //function choisirPhrasesOuMots() {
 //let choixExercices = prompt("Choisissez votre exercice Tapez : phrases ou mots")
@@ -217,45 +217,73 @@ créez une fonction afficherProposition, qui va prendre en paramètre le mot à 
 
 utilisez cette fonction pour afficher les mots à proposer. */
 
+
+let score = 0
+let ratioSelected = document.querySelectorAll("input[name='optionSource']")
+let listeActive = listeMots
+
+
 function lancerJeu() {
-    let i = 0
-    afficherProposition(listeMots[i])
+    let index = 0
+    for (let i = 0; i < ratioSelected.length; i++) {
+        ratioSelected[i].addEventListener('change', function (event) {
+            console.log(event.target.value)
+            if (event.target.value === 'phrases') {
+                listeActive = listePhrases
+                afficherProposition(listeActive[index])
+            } else {
+                listeActive = listeMots
+                afficherProposition(listeActive[index])
+            }
+        })
+    }
+
     // Validation du mot avec le boutton valider
-    bouttonValider = document.getElementById("btnValiderMot")
+    let bouttonValider = document.getElementById("btnValiderMot")
     bouttonValider.addEventListener("click", function () {
-        console.log(inputEcriture.value)
-        lancerBoucleDeJeu(listeMots[i])
-        i++
-        afficherProposition(listeMots[i])
+        console.log(listeActive)
+        lancerBoucleDeJeu(listeActive[index])
+        index++
+        afficherProposition(listeActive[index])
+
         // Remmet le input a 0 apres chaque validation :
         inputEcriture.value = ""
+
         // le .focus() met automatiquement le curseur dans l'input :
         inputEcriture.focus()
+
+        // Afficher un message quand tous les mots ont ete validé :
         let zoneProposition = document.querySelector('.zoneProposition')
-        if (i >= listeMots.length) {
+
+        if (index >= listeActive.length) {
             zoneProposition.textContent = "Le jeu est fini !"
         }
-        afficherResultat()
+
+        // Affichage du resultat en fonction du radio selectionné : 
+        afficherResultat(listeActive)
     })
 
-    // Validation du mot avec la toucher Enter
+
+    // Validation du mot avec la toucher 'Enter'
     inputEcriture = document.getElementById("inputEcriture")
     inputEcriture.addEventListener("keydown", (Event) => {
         if (Event.key === 'Enter') {
             console.log(inputEcriture.value)
-            lancerBoucleDeJeu(listeMots[i])
-            i++
-            afficherProposition(listeMots[i])
+            lancerBoucleDeJeu(listeActive[index])
+            index++
+            afficherProposition(listeActive[index])
             inputEcriture.value = ""
-             let zoneProposition = document.querySelector('.zoneProposition')
-        if (i >= listeMots.length) {
+        }
+
+        let zoneProposition = document.querySelector('.zoneProposition')
+        if (index >= listeActive.length) {
             zoneProposition.textContent = "Le jeu est fini !"
         }
-        afficherResultat()
-        }
+        afficherResultat(listeActive)
+        
     })
-    console.log(i)
 }
+
 
 function afficherProposition(liste) {
 
@@ -271,15 +299,13 @@ function lancerBoucleDeJeu(liste) {
 
 }
 
-function afficherResultat() {
-    let nbMotPropose = listeMots.length;
+function afficherResultat(liste) {
+    let nbMotPropose = liste.length;
     let spanScore = document.querySelector(".zoneScore span")
     let affichageScore = `${score} / ${nbMotPropose}`
     spanScore.innerText = affichageScore
 }
 
-let test = document.querySelector("footer span")
-let mot= 'bonjour'
-let autremot = ' tout le monde'
-let phrase = `${mot} ??? ${autremot}`
-test.innerHTML = phrase
+
+
+
