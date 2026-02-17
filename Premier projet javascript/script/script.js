@@ -219,16 +219,15 @@ utilisez cette fonction pour afficher les mots à proposer. */
 
 
 let score = 0
-let ratioSelected = document.querySelectorAll("input[name='optionSource']")
 let listeActive = listeMots
-
-
+let index = 0
+afficherProposition(listeActive[index])
 function lancerJeu() {
-    let index = 0
+    let ratioSelected = document.querySelectorAll("input[name='optionSource']")
     for (let i = 0; i < ratioSelected.length; i++) {
         ratioSelected[i].addEventListener('change', function (event) {
             console.log(event.target.value)
-            if (event.target.value === 'phrases') {
+            if (event.target.value === '2') {
                 listeActive = listePhrases
                 afficherProposition(listeActive[index])
             } else {
