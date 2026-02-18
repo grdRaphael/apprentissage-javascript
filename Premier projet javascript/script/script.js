@@ -38,6 +38,60 @@ function afficherEmail(nom, email, score) {
     let mailto = `mailto:${email}?subject=Partage du score Azertype&body=Salut, je suis ${nom} et je viens de réaliser le score ${score} sur le site d'Azertype !`
     location.href = mailto
 }
+/** Exercice : Modification des fonctions validerNom et validerEmail : elles ne vont plus retourner 
+ * true ou false, mais se contenter de lancer une exception en cas d’erreur,
+ * avec un message expliquant le problème. */
+function verifierNom(balise) {
+    let nomRegExp = new RegExp("^.{2,}$")
+    let test = nomRegExp.test(balise.value)
+    if(test === false){
+throw new Error('Le nom est trop court')
+    }else {
+        return true
+    }
+}
+
+function verifierEmail(balise) {
+    let nomRegExp = new RegExp("^[^\s@]+@[^\s@]+\.[^\s@]+$")
+       let test = nomRegExp.test(balise.value)
+    if(test === false){
+throw new Error("L'email n'est pas valide")
+    }else {
+        return true
+    }
+}
+
+function afficherMessageErreur(message) {
+    let popup = document.createElement('span')
+    popup.innerText = 'Une erreur est survenue '
+}
+
+//Exercice : Création d'une fonction gererFormulaire. Cette fonction va prendre en paramètre 
+//le score à envoyer, et s’occuper de gérer le formulaire.
+function gererFormulaire(scoreEmail) {
+    let baliseNom = document.getElementById('nom')
+    let nom = baliseNom.value.trim()
+
+    let baliseEmail = document.getElementById('email')
+    let email = baliseEmail.value
+    try {
+        verifierEmail(baliseEmail)
+        verifierNom(baliseNom)
+        afficherEmail(nom, email, scoreEmail)
+    } catch(error) {
+        console.log('Une erreur est survenue ' + error.message)
+    }
+
+    /*if (verifierNom(baliseNom) && verifierEmail(baliseEmail)) {
+        console.log('Formulaire validé')
+        afficherEmail(nom, email, scoreEmail)
+    } else {
+        console.log('ERREUR')
+    }*/
+
+}
+
+
 //___________
 /** Exercice :Écoutez l’événement submit sur ce nouveau formulaire, et empêchez le comportement
  par défaut de se produire ; */
@@ -46,7 +100,7 @@ formulaire.addEventListener('submit', (Event) => {
     Event.preventDefault();
     console.log("Il n'y a pas eu de rechargement de la page")
 })*/
- 
+
 
 /** Récupérez les valeurs des champs présents ; */
 /*let form = document.querySelector('form')
@@ -63,6 +117,7 @@ form.addEventListener('submit', (Event) => {
  * Cette fonction lance le jeu. 
  * Elle demande à l'utilisateur de choisir entre "mots" et "phrases" et lance la boucle de jeu correspondante
  */
+
 function lancerJeu() {
     // Initialisations
     initAddEventListenerPopup()
@@ -108,19 +163,22 @@ function lancerJeu() {
         })
     }
 
-    /** Récupérez les valeurs des champs présents ; */
+    // Gestion de l'evenement submit sur le formulaire de partage
     let form = document.querySelector('form')
     form.addEventListener('submit', (event) => {
         event.preventDefault()
-        console.log("Submit OK")
-        let balisenom = document.getElementById('nom')
-        let nom = balisenom.value
-        let baliseemail = document.getElementById('email')
-        let email = baliseemail.value
-        
         let scoreEmail = `${score} / ${i}`
-        afficherEmail(nom, email, scoreEmail)
+        gererFormulaire(scoreEmail)
     })
 
+
     afficherResultat(score, i)
+
+    function verifierChamp(champ) {
+        // Si le champ est vide, on lance une exception
+        if (champ.value === "") {
+            throw new Error(`Le champ ${champ.id} est vide`)
+        }
+    }
+
 }
