@@ -43,27 +43,35 @@ function afficherEmail(nom, email, score) {
  * avec un message expliquant le problème. */
 function verifierNom(balise) {
     let nomRegExp = new RegExp("^.{2,}$")
-    let test = nomRegExp.test(balise.value)
-    if(test === false){
-throw new Error('Le nom est trop court')
-    }else {
-        return true
+
+    if (!nomRegExp.test(balise.value)) {
+        throw new Error('Le nom est trop court')
     }
+    return true
 }
 
 function verifierEmail(balise) {
-    let nomRegExp = new RegExp("^[^\s@]+@[^\s@]+\.[^\s@]+$")
-       let test = nomRegExp.test(balise.value)
-    if(test === false){
-throw new Error("L'email n'est pas valide")
-    }else {
-        return true
+    let mailRegExp = new RegExp("^[a-z0-9.-_]+@[a-z0-9.-_]+\\.[a-z0-9-_]+$")
+
+    if (!mailRegExp.test(balise.value)) {
+        throw new Error("L'email n'est pas valide")
     }
+    return true
+
 }
 
 function afficherMessageErreur(message) {
-    let popup = document.createElement('span')
-    popup.innerText = 'Une erreur est survenue '
+
+    let spanMessage = document.getElementById('ErreurMessage')
+    if (!spanMessage) {
+        let popup = document.querySelector('.popup')
+        spanMessage = document.createElement('span')
+        spanMessage.id = 'ErreurMessage' 
+
+        popup.append(spanMessage)
+    }
+    spanMessage.innerText = message
+
 }
 
 //Exercice : Création d'une fonction gererFormulaire. Cette fonction va prendre en paramètre 
@@ -78,19 +86,18 @@ function gererFormulaire(scoreEmail) {
         verifierEmail(baliseEmail)
         verifierNom(baliseNom)
         afficherEmail(nom, email, scoreEmail)
-    } catch(error) {
-        console.log('Une erreur est survenue ' + error.message)
+        afficherMessageErreur("")
+    
+    } catch (error) {
+        afficherMessageErreur('Une erreur est survenue ' + error.message)
     }
-
-    /*if (verifierNom(baliseNom) && verifierEmail(baliseEmail)) {
-        console.log('Formulaire validé')
-        afficherEmail(nom, email, scoreEmail)
-    } else {
-        console.log('ERREUR')
-    }*/
-
 }
-
+/*if (verifierNom(baliseNom) &&verifierEmail(baliseEmail)) {
+           console.log('Formulaire validé')
+           afficherEmail(nom, email, scoreEmail)
+       } else {
+           console.log('ERREUR')
+       }*/
 
 //___________
 /** Exercice :Écoutez l’événement submit sur ce nouveau formulaire, et empêchez le comportement
