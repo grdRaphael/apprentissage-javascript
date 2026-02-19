@@ -2,7 +2,7 @@
 
 Projet personnel de reconversion vers le développement web front-end.
 
-Le site peut être visité ici : https://grdraphael.github.io/apprentissage-javascript/
+Le site peut être visité ici : 
 
 Ce dépôt regroupe mes exercices réalisés pendant mon apprentissage progressif du JavaScript, en parallèle de cours en ligne (OpenClassrooms) et de pratique personnelle.
 
